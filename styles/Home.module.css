@@ -27,6 +27,7 @@
 
 .wrapper {
     padding-bottom: 200px;
+    width: 100%;
 }
 
 .btn:hover {
@@ -48,8 +49,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
-    height: 100vw;
+    width: 100%;
+    height: 100%;
     padding: 0;
 }
 
@@ -385,11 +386,11 @@
 }
 
 .spacerTop {
-    margin-top: 16px;
+    margin-top: 5px;
 }
 
 .bigSpacerTop {
-    margin-top: 32px;
+    margin-top: 10px;
 }
 
 .spacerBottom {
@@ -405,8 +406,8 @@
 }
 
 .headerLogo {
-    min-width: 300px;
-    max-width: 600px;
+    width: 100%;
+    max-width: 500px;
     margin: auto;
 }
 
