@@ -54,7 +54,7 @@ export default function SignIn() {
             <div className={`${styles.main}`}>
                 <h2 className={styles.noGapBottom}>Sign using your wallet</h2>
                 <p>
-                    This proves that you really own the wallet that you've claimed to be
+                    This proves that you really own the wallet that you&apos;ve claimed to be
                     connected.
                 </p>
 
