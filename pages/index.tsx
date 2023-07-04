@@ -11,10 +11,16 @@ const Home: NextPage = () => {
   async function requestGrantRole() {
     // Then make a request to our API endpoint.
     try {
-      const response = await fetch("/api/grant-role", {
+      await fetch("/api/grant-role", {
         method: "POST",
-      });
-      alert("Request sent! Please allow a couple minutes for roles to be applied.");
+      }).then(response => {
+        if (response.status === 200) {
+          alert("Request sent! Please allow a couple minutes for roles to be applied.");
+        } else {
+          alert("Authentication error! Please try again later.");
+        }
+      })
+
     } catch (e) {
       console.error(e);
     }

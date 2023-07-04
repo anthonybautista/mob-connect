@@ -1,9 +1,7 @@
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 import { getUser } from "./thirdweb-auth/[...thirdweb]";
-import { ethers } from "ethers";
 
 export default async function grantRole(
     req: NextApiRequest,
@@ -32,7 +30,7 @@ export default async function grantRole(
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({"address": user?.address!, "user": session.user.name, "userId": session.userId}),
+        body: JSON.stringify({"address": user?.address!, "user": session.user.name, "userId": session.userId, "secret": process.env.AUTH_SECRET}),
         method: "POST",
       }
     )
