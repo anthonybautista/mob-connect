@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   return (
       <div className={styles.wrapper}>
         <div className={styles.container} style={{ marginTop: 0 }}>
-          <img src="/images/mob-circle-logo.png" alt="The Mob DAO Logo" className="headerLogo"/>
+          <img src="/images/mob-circle-logo.png" alt="The Mob DAO Logo" className={styles.headerLogo}/>
           <SignIn />
 
           {address && session && (
