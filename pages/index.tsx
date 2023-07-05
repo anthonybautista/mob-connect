@@ -10,6 +10,7 @@ const Home: NextPage = () => {
 
   async function requestGrantRole() {
     // Then make a request to our API endpoint.
+    document.getElementById('roleButton').innerHTML = "Verifying...";
     try {
       await fetch("/api/grant-role", {
         method: "POST",
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
         } else {
           alert("Authentication error! Please try again later.");
         }
+        document.getElementById('roleButton').innerHTML = "Assign Roles";
       })
 
     } catch (e) {
@@ -34,7 +36,7 @@ const Home: NextPage = () => {
 
           {address && session && (
               <div className={styles.collectionContainer}>
-                <button className={styles.mainButton} onClick={requestGrantRole}>Assign Roles</button>
+                <button id="roleButton" className={styles.mainButton} onClick={requestGrantRole}>Assign Roles</button>
               </div>
           )}
         </div>

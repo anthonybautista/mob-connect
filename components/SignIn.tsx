@@ -17,6 +17,7 @@ export default function SignIn() {
     const { isLoggedIn } = useUser();
     const login = useLogin();
     const connectWithMetamask = useMetamask();
+    const connectWithWalletConnect = useWalletConnect();
     const disconnectWallet = useDisconnect();
 
     // 1. The user is signed into discord and connected to wallet.
@@ -42,8 +43,15 @@ export default function SignIn() {
                     onClick={() => connectWithMetamask()}
                     className={`${styles.mainButton} ${styles.spacerTop}`}
                 >
-                    Connect Wallet
+                    Metamask
                 </button>
+              <br/>
+              <button
+                onClick={() => connectWithWalletConnect()}
+                className={`${styles.mainButton} ${styles.spacerTop}`}
+              >
+                WalletConnect
+              </button>
             </div>
         );
     }
