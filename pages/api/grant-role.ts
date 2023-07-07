@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 import { getUser } from "./thirdweb-auth/[...thirdweb]";
+import AES from 'crypto-js/aes';
+import enc from 'crypto-js/enc-hex';
 
 export default async function grantRole(
     req: NextApiRequest,
@@ -22,15 +24,26 @@ export default async function grantRole(
         return;
     }
 
+
+    const encryptId = (str) => {
+        var key = enc.parse(process.env.AUTH_SECRET);
+        var iv = enc.parse(process.env.AUTH_SECRET_3);
+        const encoded = AES.encrypt(str, iv, { iv: iv });
+        console.log(iv)
+        console.log(encodeURIComponent(encoded.toString()))
+        return encodeURIComponent(encoded.toString());
+    }
+
     // contract calls
     const response = await fetch(
       // Discord Developer Docs for this API Request: https://discord.com/developers/docs/resources/guild#add-guild-member-role
-      `http://3.83.222.82:3000/update-roles`,
+   `http://3.83.222.82:3000/update-roles`,
+      //`http://localhost:80/update-roles`,
       {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({"address": user?.address!, "user": session.user.name, "userId": session.userId, "secret": process.env.AUTH_SECRET}),
+        body: JSON.stringify({"address": user?.address!, "user": session.user.name, "userId": session.userId, "secret": encryptId(process.env.AUTH_SECRET_2)}),
         method: "POST",
       }
     )
