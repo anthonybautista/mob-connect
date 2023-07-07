@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 import { getUser } from "./thirdweb-auth/[...thirdweb]";
-import AES from 'crypto-js/aes';
-import enc from 'crypto-js/enc-hex';
+import SHA3 from 'crypto-js/sha3';
 
 export default async function grantRole(
     req: NextApiRequest,
@@ -25,12 +24,9 @@ export default async function grantRole(
     }
 
 
-    const encryptId = (str) => {
-        var key = enc.parse(process.env.AUTH_SECRET);
-        var iv = enc.parse(process.env.AUTH_SECRET_3);
-        const encoded = AES.encrypt(str, iv, { iv: iv });
-        console.log(iv)
-        console.log(encodeURIComponent(encoded.toString()))
+    const encryptId = (addr, name, id, str) => {
+        const encoded = SHA3(addr+name+id+str);
+
         return encodeURIComponent(encoded.toString());
     }
 
@@ -43,7 +39,10 @@ export default async function grantRole(
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({"address": user?.address!, "user": session.user.name, "userId": session.userId, "secret": encryptId(process.env.AUTH_SECRET_2)}),
+        body: JSON.stringify({"address": user?.address!,
+                                    "user": session.user.name,
+                                    "userId": session.userId,
+                                    "secret": encryptId(user?.address!, session.user.name, session.userId, process.env.AUTH_SECRET_2)}),
         method: "POST",
       }
     )
