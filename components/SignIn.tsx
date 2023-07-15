@@ -22,76 +22,97 @@ export default function SignIn() {
 
     // 1. The user is signed into discord and connected to wallet.
     if (session && address) {
+      // 3. sign message
+      if (!isLoggedIn) {
         return (
-            <div className={styles.bigSpacerTop}>
-                <a onClick={() => signOut()} className={styles.secondaryButton}>
-                    Sign out of Discord
-                </a>
-                |<a onClick={() => disconnectWallet()} className={styles.secondaryButton}>
-                Disconnect wallet
-            </a>
-            </div>
+          <div className={`${styles.main}`}>
+            <h2 className={styles.noGapBottom}>Sign using your wallet</h2>
+            <p>
+              This proves that you really own the wallet that you&apos;ve claimed to be
+              connected.
+            </p>
+
+            <button
+              onClick={async () => {
+                await login.login();
+              }}
+              className={`${styles.mainButton} ${styles.spacerTop}`}
+            >
+              Sign message!
+            </button>
+          </div>
         );
+      }
+      return (
+        <div className={styles.bigSpacerTop}>
+            <a onClick={() => signOut()} className={styles.secondaryButton}>
+                Sign out of Discord
+            </a>
+            |<a onClick={() => disconnectWallet()} className={styles.secondaryButton}>
+            Disconnect wallet
+        </a>
+        </div>
+      );
     }
 
     // 2. Connect Wallet
     if (!address) {
-        return (
-            <div className={styles.main}>
-                <p>Connect your wallet to check eligibility.</p>
-                <button
-                    onClick={() => connectWithMetamask()}
-                    className={`${styles.mainButton} ${styles.spacerTop}`}
-                >
-                    Metamask
-                </button>
-              <br/>
-              <button
-                onClick={() => connectWithWalletConnect()}
-                className={`${styles.mainButton} ${styles.spacerTop}`}
-              >
-                WalletConnect
-              </button>
-            </div>
-        );
+      return (
+        <div className={styles.main}>
+          <p>Connect your wallet to check eligibility.</p>
+          <button
+              onClick={() => connectWithMetamask()}
+              className={`${styles.mainButton} ${styles.spacerTop}`}
+          >
+              Metamask
+          </button>
+          <br/>
+          <button
+            onClick={() => connectWithWalletConnect()}
+            className={`${styles.mainButton} ${styles.spacerTop}`}
+          >
+            WalletConnect
+          </button>
+        </div>
+      );
     }
 
     // 3. sign message
     if (!isLoggedIn) {
-        return (
-            <div className={`${styles.main}`}>
-                <h2 className={styles.noGapBottom}>Sign using your wallet</h2>
-                <p>
-                    This proves that you really own the wallet that you&apos;ve claimed to be
-                    connected.
-                </p>
+      return (
+        <div className={`${styles.main}`}>
+          <h2 className={styles.noGapBottom}>Sign using your wallet</h2>
+          <p>
+              This proves that you really own the wallet that you&apos;ve claimed to be
+              connected.
+          </p>
 
-                <button
-                    onClick={async () => {
-                        await login.login();
-                    }}
-                    className={`${styles.mainButton} ${styles.spacerTop}`}
-                >
-                    Sign message!
-                </button>
-            </div>
-        );
+          <button
+              onClick={async () => {
+                  await login.login();
+              }}
+              className={`${styles.mainButton} ${styles.spacerTop}`}
+          >
+              Sign message!
+          </button>
+        </div>
+      );
     }
 
     // 3. Connect with Discord (OAuth)
     if (!session) {
-        return (
-            <div className={`${styles.main}`}>
-                <p>Sign In with Discord link your account!</p>
+      return (
+        <div className={`${styles.main}`}>
+          <p>Sign In with Discord link your account!</p>
 
-                <button
-                    onClick={() => signIn("discord")}
-                    className={`${styles.mainButton} ${styles.spacerTop}`}
-                >
-                    Connect Discord
-                </button>
-            </div>
-        );
+          <button
+              onClick={() => signIn("discord")}
+              className={`${styles.mainButton} ${styles.spacerTop}`}
+          >
+              Connect Discord
+          </button>
+        </div>
+      );
     }
 
 // default return nothing

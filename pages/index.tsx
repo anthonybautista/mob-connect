@@ -1,4 +1,4 @@
-import { useAddress } from "@thirdweb-dev/react";
+import {useAddress, useUser} from "@thirdweb-dev/react";
 import { useSession } from "next-auth/react";
 import SignIn from "../components/SignIn";
 import type { NextPage } from "next";
@@ -7,6 +7,7 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const address = useAddress();
   const { data: session } = useSession();
+  const { isLoggedIn } = useUser();
 
   async function requestGrantRole() {
     // Then make a request to our API endpoint.
@@ -34,7 +35,7 @@ const Home: NextPage = () => {
           <img src="/images/mob-circle-logo.png" alt="The Mob DAO Logo" className={styles.headerLogo}/>
           <SignIn />
 
-          {address && session && (
+          {address && session && isLoggedIn && (
               <div className={styles.collectionContainer}>
                 <button id="roleButton" className={styles.mainButton} onClick={requestGrantRole}>Assign Roles</button>
               </div>
